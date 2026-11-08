@@ -2,8 +2,8 @@
 
 Company website for the group behind **Concertlands**, **EventsCozy**, and **Hotels50**.
 
-- GitHub Pages: https://aml-media.github.io/aml-media-group/
-- Intended company domain: https://amlmediagroups.com
+- Company domain: https://amlmediagroups.com
+- GitHub Pages project URL: https://aml-media.github.io/aml-media-group/
 - Public contact: contact@amlmediagroups.com
 
 ## Development
@@ -30,9 +30,11 @@ npm run check
 
 Push to `main` to run `.github/workflows/pages.yml`. It installs from the lockfile, builds the static pages, checks metadata and local links, uploads the artifact, and deploys to GitHub Pages. Repository Pages settings must use **GitHub Actions** as the build source.
 
-The workflow defaults to `https://aml-media.github.io/aml-media-group`. It reads an optional repository Actions variable named `SITE_URL`; the base path, canonical URLs, sitemap, robots.txt, structured data, image paths, and share metadata follow that value. A local build defaults to `https://amlmediagroups.com`.
+The repository Actions variable `SITE_URL` is configured as `https://amlmediagroups.com`. The base path, canonical URLs, sitemap, robots.txt, structured data, image paths, and share metadata follow that value. If the variable is absent, the workflow falls back to `https://aml-media.github.io/aml-media-group`. A local build defaults to `https://amlmediagroups.com`.
 
-### Connect amlmediagroups.com
+### Custom domain configuration
+
+The domain uses GoDaddy DNS and is verified under the `aml-media` GitHub account. Keep the `_github-pages-challenge-aml-media` TXT record to retain verification. The configuration steps below document how to recreate the connection.
 
 1. Make sure you control the domain and can edit its DNS. Verify domain ownership in the AML Media account's Pages settings if available.
 2. Set the repository's Pages custom domain to `amlmediagroups.com`.
