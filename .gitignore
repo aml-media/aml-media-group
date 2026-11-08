@@ -1,0 +1,26 @@
+.DS_Store
+/outputs/
+# Unused local starter files are preserved on disk, outside the GitHub site source.
+/aml-media-group/.openai/
+/aml-media-group/.sites-runtime/
+/aml-media-group/.wrangler/
+/aml-media-group/components/ui/
+/aml-media-group/components/connector-error.tsx
+/aml-media-group/db/
+/aml-media-group/drizzle/
+/aml-media-group/examples/
+/aml-media-group/hooks/
+/aml-media-group/vendor/
+/aml-media-group/worker/
+/aml-media-group/lib/connector*
+/aml-media-group/lib/utils.ts
+/aml-media-group/app/chatgpt-auth.ts
+/aml-media-group/cloudflare-env.d.ts
+/aml-media-group/components.json
+/aml-media-group/drizzle.config.ts
+/aml-media-group/eslint.config.mjs
+/aml-media-group/vite.config.ts
+/aml-media-group/scripts/*
+!/aml-media-group/scripts/generate-brand-assets.mjs
+!/aml-media-group/scripts/verify-static.mjs
+!/aml-media-group/scripts/prepare-static.mjs

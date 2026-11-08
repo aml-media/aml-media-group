@@ -1,0 +1,13 @@
+import sharp from 'sharp';
+import { readFile, writeFile } from 'node:fs/promises';
+const source = await readFile(new URL('../public/favicon.svg', import.meta.url));
+const root = new URL('../public/', import.meta.url);
+for (const [name, size] of [['favicon-96.png',96],['apple-touch-icon.png',180],['icon-192.png',192],['icon-512.png',512]]) await sharp(source).resize(size,size).png().toFile(new URL(name,root).pathname);
+const sizes=[16,32,48];
+const images=await Promise.all(sizes.map(size=>sharp(source).resize(size,size).png().toBuffer()));
+const header=Buffer.alloc(6+16*sizes.length);header.writeUInt16LE(1,2);header.writeUInt16LE(sizes.length,4);let offset=header.length;
+images.forEach((image,index)=>{const start=6+16*index;header[start]=sizes[index];header[start+1]=sizes[index];header.writeUInt16LE(1,start+4);header.writeUInt16LE(32,start+6);header.writeUInt32LE(image.length,start+8);header.writeUInt32LE(offset,start+12);offset+=image.length;});
+await writeFile(new URL('favicon.ico',root),Buffer.concat([header,...images]));
+const card = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630"><rect width="1200" height="630" fill="#f7f6f0"/><rect x="760" width="440" height="630" fill="#183c31"/><path d="m830 440 120-260h72l120 260h-84l-72-173-72 173z" fill="#f7f6f0"/><path d="m940 380 90 0 26 60H914z" fill="#d1e4b2"/><text x="70" y="100" font-family="Arial,sans-serif" font-size="22" letter-spacing="4" fill="#183c31">AML MEDIA GROUP</text><text x="65" y="255" font-family="Arial,sans-serif" font-size="69" letter-spacing="-3" fill="#183c31">A world worth</text><text x="65" y="338" font-family="Georgia,serif" font-style="italic" font-size="74" letter-spacing="-3" fill="#6a7e5d">showing up for.</text><path d="M70 448h620" stroke="#c4cfba"/><text x="70" y="493" font-family="Arial,sans-serif" font-size="21" fill="#183c31">Concertlands · EventsCozy · Hotels50</text><text x="70" y="562" font-family="Arial,sans-serif" font-size="17" fill="#616b62">Live experiences. Thoughtful travel.</text></svg>`;
+await sharp(Buffer.from(card)).png().toFile(new URL('social-card.png',root).pathname);
+console.log('Generated PNG, ICO, Apple touch icons, and social preview.');
