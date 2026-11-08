@@ -16,6 +16,7 @@ for(const route of routes){
   assert.match(html,/<link rel="icon"[^>]+favicon-96.png/);
   for(const [,json] of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) JSON.parse(json);
   for(const [,url] of html.matchAll(/(?:href|src)="(\/(?!\/)[^"?#]*)/g)){
+    if(base) assert.ok(url.startsWith(base+'/'), `${route}: link escapes deployment base ${url}`);
     const local=decodeURIComponent(url).slice(base.length); const target=path.join(root,local.endsWith('/')?`${local}index.html`:local);
     await access(target).catch(()=>{throw new Error(`${route}: missing asset/link ${local}`)});
   }
